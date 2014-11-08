@@ -41,25 +41,24 @@ int getTimeStamp()
 //create file and write reading values to it
 void writeToFile(int temp, int humidity)
 {
-
+	//to be able to create files with rw permissions for pi,
+	//	since sudo used to run the ./test files have to be accessed for pi user 
+	umask(000);
 	int timeStamp = getTimeStamp();
 	int paramsLen = 150; 
 
 	int numOfSensors = 2;
 	char sensorType[]={'T','H'};
-	char readingsParams[numOfSensors][paramsLen];
-	
+	char readingsParams[numOfSensors][paramsLen];	
 
 	//char tempParams [paramsLen];
 	sprintf(readingsParams[0], "device_id=%s&time=%d&value=%d&sensor_type=%s\n" , DEVICE_ID, timeStamp, temp, TEMP_TYPE);
 	
-	printf(readingsParams[0]);
-	
-	
-	//char humidityParams [paramsLen];
+	//printf(readingsParams[0]);	
+
 	sprintf(readingsParams[1] , "device_id=%s&time=%d&value=%d&sensor_type=%s\n" , DEVICE_ID, timeStamp, humidity, HUMID_TYPE);
 
-	printf(readingsParams[1]);
+	//printf(readingsParams[1]);
 	
 	struct stat st = {0};
 	
@@ -71,9 +70,7 @@ void writeToFile(int temp, int humidity)
 	char fileName[25];
 
 	sprintf(fileName, "%s/%d.txt", FOLDER_NAME, timeStamp);
-	printf("Standard name: %s\n", fileName);
-	
-	
+		
 	int i;
 	for(i = 0; i < numOfSensors; i++)
 	{
@@ -91,10 +88,6 @@ void writeToFile(int temp, int humidity)
 			exit(1);
 		}
 
-
-		// fputs(tempParams, f);
-		//fputs(humidityParams, f);
-
 		// fflush(f);
 		fclose(f);
 	}
@@ -102,7 +95,6 @@ void writeToFile(int temp, int humidity)
 
 int main(int argc, char *argv[])
 {
-
 	int temp, humid;
 	int sensorType=DHT11;
 	int pin=4; // BCM(pin 4)=BOARD(pin 7)
@@ -112,13 +104,16 @@ int main(int argc, char *argv[])
 	// check if elevated
 	//getenv - gets value of an environmental varible
 	char *envar = getenv("SUDO_COMMAND");
-	if (envar == NULL) {
+	if (envar == NULL) 
+	{
 		printf("Run with SUDO\n");
 	}
 
-	else {
+	else 
+	{
 		int result = DHT_ERROR_CHECKSUM;
-		while ((tries>0)&&(result!=DHT_SUCCESS)) {
+		while ((tries>0)&&(result!=DHT_SUCCESS)) 
+		{
 			tries--;
 			// get the sensor reading
 			result = pi_dht_read(sensorType, pin, &humidity, &temperature);
