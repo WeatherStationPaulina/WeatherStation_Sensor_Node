@@ -3,15 +3,19 @@
 
 cd readings/
 
-files=(*.txt)
 url="http://weather.cs.nuim.ie/input.php"
 
-for file in "${files[@]}"
+for file in `ls *.txt`
  do
    while IFS='\n' read line
- do
- 
-	curl --data "$line" $url
-
- done < "$file"
-done
+   do 
+    result_code=`curl -s -D- --data "$line" $url`
+   done < "$file"	
+   if grep -q "200" <<< "$result_code"
+   then
+    #delete the file
+	rm $file
+	echo "Upload successful, file $file deleted"
+   fi		
+   
+ done
