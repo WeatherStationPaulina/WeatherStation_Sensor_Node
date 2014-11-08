@@ -2,7 +2,7 @@
 
 # script which reads all files line by line, 
 #builds up curl and send it to server 
-cd readings/
+cd /home/pi/dht11/readings
 
 url="http://weather.cs.nuim.ie/input.php"
 
