@@ -1,16 +1,19 @@
-# script which builds up curl and send it to server 
+#!/bin/bash
 
-
+# script which reads all files line by line, 
+#builds up curl and send it to server 
 cd readings/
 
 url="http://weather.cs.nuim.ie/input.php"
 
-for file in `ls *.txt`
+#sort added in order to start uploading from the oldest reading
+for file in `ls *.txt | sort`
  do
    while IFS='\n' read line
    do 
     result_code=`curl -s -D- --data "$line" $url`
    done < "$file"	
+   # to check what server result code, 200 == success
    if grep -q "200" <<< "$result_code"
    then
     #delete the file
