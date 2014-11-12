@@ -9,7 +9,7 @@ while true
     ./uploadReadings.sh
 	
 	echo "Sleeping ..."
-	sleep 1m
+	sleep 10m
 	
   done
 done

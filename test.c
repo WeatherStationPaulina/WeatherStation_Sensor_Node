@@ -24,9 +24,10 @@
 
 #define FOLDER_NAME "readings"
 
-#define SENSOR_ID "1"
+#define SENSOR_ID_T "1"
+#define SENSOR_ID_H "2"
 #define TEMP_TYPE "T"
-#define HUMID_TYPE "H"
+#define HUMID_TYPE "H" 
 #define DESTINATION_URL "http://weather.cs.nuim.ie/input.php"
 
 int getTimeStamp()
@@ -52,11 +53,11 @@ void writeToFile(int temp, int humidity)
 	char readingsParams[numOfSensors][paramsLen];	
 
 	//char tempParams [paramsLen];
-	sprintf(readingsParams[0], "SENSOR_ID=%s&time=%d&value=%d\n" , SENSOR_ID, timeStamp, temp);
+	sprintf(readingsParams[0], "sensor_id=%s&time=%d&value=%d\n" , SENSOR_ID_T, timeStamp, temp);
 	
 	//printf(readingsParams[0]);	
 
-	sprintf(readingsParams[1] , "SENSOR_ID=%s&time=%d&value=%d\n" , SENSOR_ID, timeStamp, humidity);
+	sprintf(readingsParams[1] , "sensor_id=%s&time=%d&value=%d\n" , SENSOR_ID_H, timeStamp, humidity);
 
 	//printf(readingsParams[1]);
 	

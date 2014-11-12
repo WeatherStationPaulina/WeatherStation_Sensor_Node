@@ -12,6 +12,8 @@ for file in `ls *.txt | sort`
    while IFS='\n' read line
    do 
     result_code=`curl -s -D- --data "$line" $url`
+	
+	#echo curl --data "$line" $url
    done < "$file"	
    # to check what server result code, 200 == success
    if grep -q "200" <<< "$result_code"
@@ -19,6 +21,13 @@ for file in `ls *.txt | sort`
     #delete the file
 	rm $file
 	echo "Upload successful, file $file deleted"
-   fi		
+   fi
+
+   if  grep -q "409" <<< "$result_code"
+   then
+    #delete the file
+	rm $file
+	echo "Duplicate entry , file $file deleted"
+   fi
    
  done
