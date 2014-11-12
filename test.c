@@ -8,7 +8,7 @@
 //
 
 
-//curl --data "device_id=1&time=1414532294&value=23&sensor_type=T" http://weather.cs.nuim.ie/input.php
+//curl --data "sensor_id=1&time=1414532294&value=23" http://weather.cs.nuim.ie/input.php
 
 
 #include <stdio.h>
@@ -24,7 +24,7 @@
 
 #define FOLDER_NAME "readings"
 
-#define DEVICE_ID "1"
+#define SENSOR_ID "1"
 #define TEMP_TYPE "T"
 #define HUMID_TYPE "H"
 #define DESTINATION_URL "http://weather.cs.nuim.ie/input.php"
@@ -52,11 +52,11 @@ void writeToFile(int temp, int humidity)
 	char readingsParams[numOfSensors][paramsLen];	
 
 	//char tempParams [paramsLen];
-	sprintf(readingsParams[0], "device_id=%s&time=%d&value=%d&sensor_type=%s\n" , DEVICE_ID, timeStamp, temp, TEMP_TYPE);
+	sprintf(readingsParams[0], "SENSOR_ID=%s&time=%d&value=%d\n" , SENSOR_ID, timeStamp, temp);
 	
 	//printf(readingsParams[0]);	
 
-	sprintf(readingsParams[1] , "device_id=%s&time=%d&value=%d&sensor_type=%s\n" , DEVICE_ID, timeStamp, humidity, HUMID_TYPE);
+	sprintf(readingsParams[1] , "SENSOR_ID=%s&time=%d&value=%d\n" , SENSOR_ID, timeStamp, humidity);
 
 	//printf(readingsParams[1]);
 	
