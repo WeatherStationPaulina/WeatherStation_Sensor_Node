@@ -51,9 +51,9 @@ int main ( void )
    fputs(line, stdout);
    char gps [14][12];
    int index = 0;
-   char lat[10];
-   char lng[10];
-   char altitude[10];
+   char lat[25];
+   char lng[25];
+   char altitude[25];
    
    char* buffer;
 
@@ -70,9 +70,9 @@ int main ( void )
 			buffer++;
 		}
 	}
-	sprintf(lat, "%s%s", gps[2], gps[3]);
-	sprintf(lng, "%s%s", gps[4], gps[5]);
-	sprintf(altitude, "%s", gps[9]);
+	sprintf(lat, "Latitude: %s%s", gps[2], gps[3]);
+	sprintf(lng, "Longitude: %s%s", gps[4], gps[5]);
+	sprintf(altitude, "Altitude: %s", gps[9]);
 	
 	printf("%s\n", lat);
 	printf("%s\n", lng);

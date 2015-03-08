@@ -1,15 +1,8 @@
 #!/bin/bash
 
-#script which take reading of sensors every x hours,
+#script which take reading of sensors at every hour, run using crone,
 cd /home/pi/dht11
 
-while true
-  do
     sudo ./test
     ./uploadReadings.sh
-	
-	echo "Sleeping ..."
-	sleep 10m
-	
-  done
-done
+
