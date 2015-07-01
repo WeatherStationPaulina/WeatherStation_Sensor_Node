@@ -30,7 +30,6 @@ int getTimeStamp()
 	int time = ("%d\n", timeVal.tv_sec);
 	return time;
 }
-
 //create file and write reading values to it
 void writeToFile(int temperature, int humidity)
 {
@@ -46,14 +45,12 @@ void writeToFile(int temperature, int humidity)
 
 	sprintf(readingsParams[0], "sensor_id=%s&time=%d&value=%d\n" , SENSOR_ID_T, timeStamp, temperature);		
 	sprintf(readingsParams[1] , "sensor_id=%s&time=%d&value=%d\n" , SENSOR_ID_H, timeStamp, humidity);	
-	struct stat st = {0};
-	
+	struct stat st = {0};	
 	//check if folder already exists
-	if(stat(FOLDER_NAME, &st)== -1)
+	if(stat(FOLDER_NAME, &st) == -1)
 	{
 		mkdir(FOLDER_NAME , 0777);
 	}
-
 	//build up appropriate file name to store sensor reading value
 	char fileName[25];
 	sprintf(fileName, "%s/%d.txt", FOLDER_NAME, timeStamp);
@@ -81,10 +78,10 @@ void writeToFile(int temperature, int humidity)
 int main(int argc, char *argv[])
 {
 	int temp, humid;
-	int sensorType=DHT22;
-	int pin=4; //rPi pin number
+	int sensorType = DHT22;
+	int pin = 4; //rPi pin number
 	float humidity = 0, temperature = 0;
-	int tries=30; // try up to 30 times
+	int tries = 30; // try up to 30 times
 
 	// check if elevated
 	//getenv - gets value of an environmental variable
@@ -96,13 +93,13 @@ int main(int argc, char *argv[])
 	else 
 	{
 		int result = DHT_ERROR_CHECKSUM;
-		while ((tries>0)&&(result!=DHT_SUCCESS)) 
+		while ((tries > 0)&&(result != DHT_SUCCESS)) 
 		{
 			tries--;
 			// get the sensor reading
 			result = pi_dht_read(sensorType, pin, &humidity, &temperature);
 		}
-		if (result==DHT_SUCCESS)
+		if (result == DHT_SUCCESS)
 		{
 			printf("Temp=%6.2f°, humidity=%7.2f%% ", temperature, humidity);
 			
